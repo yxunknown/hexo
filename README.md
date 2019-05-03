@@ -2,7 +2,7 @@
 hexo blog
 
 # instructions
-npm install
+npm install  
 hexo server
 
 then visit http://localhost:4000

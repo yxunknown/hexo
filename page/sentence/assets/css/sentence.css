@@ -1,0 +1,45 @@
+body {
+    font-family: STFangsong, sans-serif;
+    font-weight: bold;
+}
+::selection {
+    background-color: black;
+    color: white;
+}
+.home {
+    width: 100%;
+    text-align: center;
+}
+.home h1 {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+.home small {
+    font-size: 16px;
+}
+.time {
+    color: #8c8c8c;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+.sentence {
+    width: 100%;
+    text-align: center;
+}
+.line {
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 0 0 5px 0;
+}
+.recite {
+    color: #8c8c8c;
+    font-size: small;
+    padding-left: 200px;
+}
+.tips {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #333333;
+}

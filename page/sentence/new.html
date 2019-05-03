@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>萬物</title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/fullpage.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/new.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/nprogress.css">
+</head>
+<body>
+<div id="fullpage">
+    <div class="section">
+        <div class="new-sentence">
+            <h1>萬千事物，一言難盡</h1>
+            <textarea class="input" type="text" id="lines"
+                      placeholder="說出來的能叫真心話嗎？"></textarea>
+            <input class="input" type="text" id="time" placeholder="輸入時間">
+            <input class="input" type="text" id="recite" placeholder="引用信息">
+            <br>
+            <button id="submit" onclick="save()">保 存</button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="./assets/js/fullpage.extensions.min.js"></script>
+<script type="text/javascript" src="./assets/js/nprogress.js"></script>
+
+<!--lean cloud sdk-->
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
+
+<script type="text/javascript">
+    const {} = AV;
+    AV.init("ioO9v1UFAYmkUhXcEKp8MJky-gzGzoHsz", "n9E7dOMJkkjBR4OEcebl6L7f");
+    Sentence = AV.Object.extend("sentence");
+    // init fullpage
+    new fullpage("#fullpage", {
+        scrollHorizontally: true
+    });
+
+
+
+    function save() {
+        lines = document.getElementById("lines").value.trim();
+        time = document.getElementById("time").value.trim();
+        recite = document.getElementById("recite").value.trim();
+        if (lines === "") {
+            alert("輸入內容！");
+            return;
+        }
+        if (time === "") {
+            alert("輸入時間！")
+            return;
+        }
+        lines = lines.split("\n");
+        sentence = {
+            lines: lines,
+            time: time,
+            recite: recite
+        };
+        NProgress.start();
+        thing = new Sentence();
+
+        thing.set("sentence", sentence);
+        thing.save().then(function (data) {
+            NProgress.done();
+            document.getElementById("lines").value = "";
+            document.getElementById("time").value = "";
+            document.getElementById("recite").value = "";
+        }, function (err) {
+            NProgress.done();
+            alert(err)
+        });
+    }
+
+</script>
+</body>
+</html>

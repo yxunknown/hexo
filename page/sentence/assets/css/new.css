@@ -1,0 +1,63 @@
+body {
+    font-family: STFangsong, sans-serif;
+    font-weight: bold;
+}
+
+.new-sentence {
+    width: 60%;
+    text-align: center;
+    margin-left: 20%;
+    overflow: hidden;
+}
+.new-sentence h1 {
+    font-weight: bolder;
+}
+.input {
+    width: 90%;
+    border: none;
+    outline: 1px solid #eeeeee;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+#lines {
+    height: 150px;
+    font-size: 16px;
+    font-weight: bolder;
+    resize: none;
+}
+
+#submit {
+    width: 150px;
+    height: 30px;
+    border: none;
+    background: white;
+    color: #8c8c8c;
+}
+#submit:hover {
+    color: black;
+    font-weight: bold;
+    border: 1px solid #eeeeee;
+}
+#submit:active {
+    color: black;
+    background-color: #eeeeee;
+    border: none;
+    outline: none;
+}
+#submit:visited {
+    border: none;
+    color: #2d2d2d;
+}
+
+@media screen and (max-width: 560px) {
+    .new-sentence {
+        width: 90%;
+        margin-left: 5%;
+    }
+    .new-sentence h1 {
+        font-size: 25px;
+    }
+    #lines {
+        font-size: 16px;
+    }
+}

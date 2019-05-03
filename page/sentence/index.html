@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Everything will be ok</title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/fullpage.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/sentence.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/nprogress.css">
+
+</head>
+<body>
+<div id="fullpage">
+    <div class="section">
+        <div class="home">
+            <h1>萬物</h1>
+            <small>說出來的,能叫真心話嗎?</small>
+            <p class="time">玖壹零貳年拾叄月叄拾貳日,星期捌</p>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="./assets/js/fullpage.extensions.min.js"></script>
+<script type="text/javascript" src="./assets/js/nprogress.js"></script>
+
+<!--lean cloud sdk-->
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
+
+<script type="text/javascript">
+    // init lean cloud sdk here
+    const {Query, User} = AV;
+    AV.init("ioO9v1UFAYmkUhXcEKp8MJky-gzGzoHsz", "n9E7dOMJkkjBR4OEcebl6L7f");
+
+
+    const tips = "<p class=\"tips\">你已經看完我所有的祕密,我想搶走你最珍貴東西作爲交換!</p>";
+
+    var start = 0;
+    var limit = 10;
+    var loadMore = true;
+    var isFullPageInited = false;
+    querySentence();
+
+    function initFullPage() {
+        isFullPageInited = true;
+        new fullpage('#fullpage', {
+            //options here
+            scrollHorizontally: true,
+            navigation: true,
+            onLeave: function (index, nextIndex, direction) {
+                if (nextIndex["isLast"]) {
+                    querySentence();
+                }
+            }
+        });
+    }
+
+
+    function querySentence() {
+        NProgress.start();
+        var query = new AV.Query("sentence");
+        // set sort order key
+        query.addAscending("-createdAt");
+        query.skip(start);
+        query.limit(limit);
+        query.find().then(function (data) {
+            NProgress.done();
+            if (data.length > 0) {
+                start += limit;
+                render(data)
+            } else {
+                loadMore = false;
+                if (!isFullPageInited) {
+                    initFullPage();
+                } else {
+
+                    const sentences = document.getElementsByClassName("sentence");
+                    let lastSentence = sentences[sentences.length - 1];
+                    lastSentence.innerHTML += tips;
+                }
+            }
+        })
+    }
+    function render(data) {
+        const container = document.getElementById("fullpage");
+        const header = "<div class=\"section\">" +
+                "<dic class=\"sentence\">";
+        const trailler = "</div></div>";
+        for (let index in data) {
+            let section = "<div class=\"section\">";
+            section += "<dic class=\"sentence\">";
+            d = data[index];
+            sentence = d["attributes"]["sentence"];
+            lines = sentence["lines"];
+            let lineHtml = "";
+            for (let i in lines) {
+                lineHtml += "<p class=\"line\">" + lines[i] + "</p>"
+            }
+            let timeHtml = "<p class=\"time\">" + sentence["time"] + "</p>";
+            let reciteHtml = "<p class=\"recite\">" + sentence["recite"] + "</p>";
+            let sentenceHtml = header + lineHtml + timeHtml + reciteHtml + trailler;
+            container.innerHTML += sentenceHtml;
+        }
+        initFullPage();
+    }
+</script>
+</body>
+
+</html>

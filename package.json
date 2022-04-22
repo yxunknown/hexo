@@ -6,7 +6,7 @@
     "version": "3.8.0"
   },
   "dependencies": {
-    "fullpage.js": "^3.0.4",
+    "fullpage.js": "^4.0.5",
     "hexo": "^3.8.0",
     "hexo-deployer-rsync": "^0.1.3",
     "hexo-generator-archive": "^0.1.5",
